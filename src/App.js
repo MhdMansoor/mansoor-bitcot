@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import "./index.css";
 
-function App() {
+import { ToastContainer } from "react-toastify";
+
+import PrivateRoute from "./PrivateRoute";
+import Login from "./Container/Login";
+import SignUp from "./Container/SignUp";
+import Products from "./Container/Products";
+import AddProduct from "./Container/AddProduct";
+
+import "./assets/css/main.css";
+import "react-toastify/dist/ReactToastify.css";
+import EditProduct from "./Container/EditProduct";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/sign-up" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route
+          path="/products"
+          element={<PrivateRoute Component={Products} />}
+        />
+        <Route path="/add" element={<PrivateRoute Component={AddProduct} />} />
+        <Route
+          path="/edit/:id"
+          element={<PrivateRoute Component={EditProduct} />}
+        />
+      </Routes>
+      <ToastContainer position="top-center" autoClose={2000} />
+    </Router>
   );
-}
+};
 
 export default App;
